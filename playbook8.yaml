@@ -1,0 +1,17 @@
+---
+ - hosts: srv1
+   user: vagrant
+   become: yes
+   become_method: sudo
+   vars: 
+     - home_dir: /home/vagrant/ansible/
+     - bin_dir: /home/vagrant/ansible/bin/
+     - src_dir: /home/vagrant/ansible/src/
+     - log_dir: /home/vagrant/ansible/logs/
+     - tmp_dir: /home/vagrant/ansible/tmp/
+     - owner_1: vagrant
+     - group_1: vagrant
+
+
+   roles: 
+     - apache  

@@ -1,0 +1,10 @@
+---
+ - hosts: all
+   user: vagrant
+   become: yes
+   become_method: sudo
+   tasks:
+     - name: Install NTP
+       apt: pkg=ntp
+            state=present
+            update_cache=yes

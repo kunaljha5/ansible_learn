@@ -1,0 +1,20 @@
+---
+- name: Install git
+  apt: pkg=git state=present update_cache=true
+  notify:
+    - start ssh
+
+- name: Create app home directory
+  file: dest={{ home_dir }} mode=775 state=directory owner={{ owner_1 }} group={{ group_1 }}
+- name: Create app bin directory
+  file: dest={{ bin_dir }} mode=775 state=directory owner=vagrant group={{ group_1 }}
+- name: Create app src directory
+  file: dest={{ src_dir }} mode=775 state=directory owner=vagrant group={{ group_1 }}
+- name: Create app log directory
+  file: dest={{ log_dir }} mode=775 state=directory owner=vagrant group={{ group_1 }}
+- name: Create app tmp directory
+  file: dest={{ tmp_dir }} mode=775 state=directory owner=vagrant group={{ group_1 }}
+  notify: 
+    - restart ssh
+- name: Force restart sshd
+  service: name=ssh state=restarted 

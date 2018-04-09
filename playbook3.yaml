@@ -1,0 +1,10 @@
+---
+ - hosts: all
+   user: vagrant
+   become: yes
+   become_method: sudo
+   tasks:
+     - name: Remove lock
+       file:
+         state: absent
+         path: /var/lib/dpkg/lock            

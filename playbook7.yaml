@@ -1,0 +1,60 @@
+---
+ - hosts: srv1
+   user: vagrant
+   become: yes
+   become_method: sudo
+   vars:
+     - local: /home/vagrant/ansible/src/
+   tasks:
+     - name: install dependent programs 
+       apt: pkg={{ item }} state=present update_cache=true
+       with_items:
+         - git
+         - docker.io
+         - ohai
+         - nginx
+
+
+     - name: update text file
+       lineinfile: dest={{ local }}/{{ item }}.txt regexp='^' line='installed' state=present create=True
+       with_items:
+         - git
+         - docker.io
+         - ohai
+         - nginx
+       
+
+
+
+
+   handlers: 
+     - name: add string
+       lineinfile: dest={{ local }}/test.txt
+                   regexp='^'
+                   line='installed'
+                   state=present
+
+     - name: start create log file git
+       lineinfile: dest={{ local }}/test.txt
+                   regexp='^'
+                   line='installed' 
+                   state=present
+
+     - name: start create log file docker.io
+       lineinfile: dest={{ local }}/test.txt
+                   regexp='^'
+                   line='installed'
+                   state=present
+
+     - name: start create log file ohai
+       lineinfile: dest={{ local }}/test.txt
+                   regexp='^'
+                   line='installed'
+                   state=present
+
+     - name: start create log file nginx
+       lineinfile: dest={{ local }}/test.txt
+                   regexp='^'
+                   line='installed'
+                   state=present
+    
