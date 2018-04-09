@@ -1,0 +1,55 @@
+---
+ - hosts: srv1
+   user: vagrant
+   become: yes
+   become_method: sudo
+   vars: 
+     - username: ejhakun
+
+
+   tasks: 
+     - name: "Install software requirements {{ item }}"
+       apt: pkg={{ item }} 
+            state=present
+            update_cache=true
+       with_items:
+         - git
+         - curl
+         - htop
+         - vim
+         - wget
+         - sudo
+         - unzip
+         - zsh
+
+
+     - name: Create Sudo Group
+       group: 
+         name: sudo
+         state: present
+    
+     - name: Create new user
+       user: 
+         name={{ username }}
+         groups="sudo"
+         state=present
+         shell=/bin/bash
+         password=$6$jcbOPExek4DZt/.p$9B2Gp7v7qfN90ZwTM/ZfhLzQQ/1oDCQFbejxCGnZOV56Y3VXeq4/n9c42n6vY2gSpf0.YWA/Df1zr6v8HmIjI.  
+         home=/home/{{ username }}/
+        
+     - name: Create mandatory directory inside home
+       file:
+         path=/home/{{ username }}/{{ item }}
+         state=directory
+         owner={{ username }}
+         group={{ username }}
+         mode=0700
+       with_items:
+         - src
+         - bin
+         - backup
+         - tmp
+         - logs
+         - report
+         - lib
+         
