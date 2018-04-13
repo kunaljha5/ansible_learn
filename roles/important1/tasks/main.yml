@@ -1,0 +1,31 @@
+---
+# tasks file for important1
+ - name: Update apt cache.
+   apt: update_cache=yes cache_valid_time=86400
+   changed_when: false
+
+ - name: install services
+   apt: pkg={{ item }} state=present
+   with_items:
+     - nginx
+     - python-mysqldb
+
+ - name: create home directory for healthcheck
+   file: path={{ item.path }} state=directory mode={{ item.own }} group={{ item.group }} owner={{ item.owner }}
+   with_items:
+     - { path: '{{ root_bin }}', own: '744', group: '{{ vag_group }}', owner: '{{ vag_owner }}' }
+     - { path: '/home/vagrant/healthcheck/tmp/', own: '744', group: 'vagrant', owner: 'vagrant' }
+     - { path: '/home/vagrant/healthcheck/logs/', own: '744', group: 'vagrant', owner: 'vagrant' }
+     - { path: '/home/vagrant/healthcheck/reports/', own: '744', group: 'vagrant', owner: 'vagrant' }
+     - { path: '/home/vagrant/healthcheck/backups/', own: '744', group: 'vagrant', owner: 'vagrant' } 
+
+ - name: create test files in healthcechk directory
+   file: path={{ item.path }} state=touch mode={{ item.own }} group={{ item.group }} owner={{ item.owner }}
+   with_items:
+     - { path: '{{ vag_bin }}' , own: '755', group: '{{ vag_group }}', owner: '{{  vag_owner }}'  }
+     - { path: '/home/vagrant/healthcheck/tmp/alpha.txt', own: '744', group: 'vagrant', owner: 'vagrant' }
+     - { path: '/home/vagrant/healthcheck/logs/C1_hostname_logs.txt', own: '744', group: 'vagrant', owner: 'vagrant' }
+     - { path: '/home/vagrant/healthcheck/reports/Healthcheck_report.txt', own: '744', group: 'vagrant', owner: 'vagrant' }
+     - { path: '/home/vagrant/healthcheck/backups/alpha.tar', own: '744', group: 'vagrant', owner: 'vagrant' }
+   notify: ssh restart 
+

@@ -1,0 +1,16 @@
+---
+# vars file for important1
+root_bin: /home/vagrant/healthcheck/bin/scripts/
+root_logs: /home/vagrant/healthcheck/logs/
+root_tmp: /home/vagrant/healthcheck/tmp/
+root_backups: /home/vagrant/healthcheck/backups/
+root_reports: /home/vagrant/healthcheck/reports/
+
+vag_bin: /home/vagrant/healthcheck/bin/scripts/run.sh
+vag_logs: /home/vagrant/healthcheck/bin/logs/C1_hostname_logs.txt
+vag_tmp: /home/vagrant/healthcheck/tmp/alpha.txt
+vag_reports: /home/vagrant/healthcheck/reports/Healthcheck_report.txt
+vag_backups: /home/vagrant/healthcheck/backups/alpha.tar
+vag_group: vagrant
+vag_owner: vagrant
+

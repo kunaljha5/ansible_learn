@@ -1,0 +1,16 @@
+---
+# handlers file for important1
+ - name: ssh restart
+   service: name=ssh state=restarted sleep=5
+
+ - name: ssh stop
+   service: name=ssh state=stopped   sleep=5
+
+ - name: ssh start
+   service: name=ssh state=started sleep=5
+ 
+ - name: ssh latest
+   service: name=ssh state=latest sleep=1
+
+ - name: ssh running
+   service: name=ssh state=running sleep=4
