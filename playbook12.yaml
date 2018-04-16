@@ -7,3 +7,4 @@
     - debug: var=login
     - debug: var=login.stdout
     - debug: var=login.stdout_lines
+    - debug: msg="Logged in as user {{ login.stdout }}"
