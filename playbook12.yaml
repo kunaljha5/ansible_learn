@@ -1,0 +1,9 @@
+- name: show return value of command module
+  hosts: srv1
+  tasks:
+    - name: capture output of id command
+      command: id -un
+      register: login
+    - debug: var=login
+    - debug: var=login.stdout
+    - debug: var=login.stdout_lines
