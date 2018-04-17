@@ -1,0 +1,29 @@
+---
+ - name: Testing when and ignore_errors with register_variable
+   hosts: srv1
+   user: vagrant
+   become: True
+   become_method: sudo
+   gather_facts: False
+   tasks:
+     - name: Execute shell echo 
+       shell: echo 127
+       register: result_kunal
+       ignore_errors: True
+#       ignore_errors: False
+
+
+     - name: Print the message
+       debug: msg="State Changed  {{ result_kunal.stdout_lines }} "
+       
+
+     - name: Print the rc.
+       debug: msg=" {{ result_kunal.rc }} "
+ 
+     - name: Print zero rc string
+       shell: echo "My surname is jha" 
+       when: result_kunal.rc == 0
+
+     - name: Print non zero rc string
+       shell: echo "My Name is Kunal Jha" 
+       when: result_kunal.rc != 0 
