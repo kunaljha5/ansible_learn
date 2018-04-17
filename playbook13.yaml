@@ -1,0 +1,19 @@
+---
+ - name: loop testing using when
+   hosts: srv1
+   become: true
+   become_method: sudo
+   tasks:
+    - name: when item is greater then 5 then echo
+      command: echo {{ item }}
+      loop: [ 0, 2, 4, 6, 8, 10 ]
+      when: item > 5
+    - name: If you need to skip the whole task depending on the loop variable being defined, used the |default filter to provide an empty iterator
+      command: echo {{ item }}
+      loop: "{{ mylist|default([]) }}"
+      when: item > 5
+    - name: If using a dict in a loop
+      command: echo {{ item.key }}
+      loop: "{{ lookup('dict', mydict|default({})) }}"
+      when: item.value > 5
+
