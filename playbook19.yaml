@@ -1,0 +1,32 @@
+---
+ - hosts: srv1 
+   user: vagrant
+   become: True
+   become_method: sudo
+   gather_facts: False
+   ignore_errors: True
+   vars:
+     - log_dir: /home/vagrant/apache/log/
+   tasks:
+     - name: Create a file in log directory
+       file: path={{ item.PATH }}/local.pid state=touch mode=0755 owner=vagrant group=vagrant
+       with_items:
+         - PATH: "{{ log_dir }}"
+    
+     - name: Insert the config content inside the file
+       lineinfile: dest={{ item.PATH }}/local.pid regexp="^" line="LISTEN=:80" state=present create=True
+       with_items:
+         - PATH: "{{ log_dir }}"
+ 
+     - name: read the file that we have updated 
+       shell: cat {{ item.PATH }}/local.pid  
+       register: output
+       with_items:
+         - PATH: "{{ log_dir }}"
+
+
+     - name: print the debug
+       debug: msg={{ output.stdout_lines }}
+       with_items:
+         - PATH: "{{ log_dir }}"
+

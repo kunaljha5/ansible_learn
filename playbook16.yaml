@@ -1,0 +1,29 @@
+---
+ - hosts: srv1
+   user: vagrant
+   become: yes
+   gather_facts: False
+   become_method: sudo 
+   tasks:
+      - name: Install Apache
+        apt: pkg=apache2
+               state=present
+               update_cache=true
+        tags:
+            - apache2
+
+      - name: Install wget
+        apt: pkg=wget
+               state=present
+               update_cache=true
+        tags:
+            - wget
+
+
+      - name: Install curl
+        apt: pkg=curl
+               state=present
+               update_cache=true
+        tags:
+            - curl
+...

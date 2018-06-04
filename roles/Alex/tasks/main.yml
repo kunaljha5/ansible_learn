@@ -1,0 +1,7 @@
+---
+# tasks file for __templete__
+ 
+ - name: copy local file to remote server
+   copy: src=/home/vagrant/ansible/ansible_learn/ample.bin dest=/home/{{ user_name }}/ample.bin
+         
+

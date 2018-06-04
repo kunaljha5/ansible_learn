@@ -1,0 +1,55 @@
+---
+ - name: create directory on remote nodes
+   hosts: srv1
+   user: vagrant
+   become: True 
+   become_method: sudo
+   ignore_errors: True
+   vars:
+     - bin_dir: /home/vagrant/apache/bin/
+     - src_dir: /home/vagrant/apache/src/
+     - log_dir: /home/vagrant/apache/log/
+     - backup_dir: /home/vagrant/apache/backup/
+     - cfg_dir: /home/vagrant/apache/cfg/
+     - pkg_dir: /home/vagrant/apache/pkg/
+     - tmp_dir: /home/vagrant/apache/tmp/
+
+
+   tasks: 
+     - name: create bin directory on remote server 
+       file: path={{ bin_dir }} state=directory owner=vagrant mode=0766 group=vagrant 
+
+     - name: create src directory on remote server
+       file: path={{ src_dir }} state=directory owner=vagrant mode=0755 group=root
+
+     - name: create log directory on remote server
+       file: path={{ log_dir }} state=directory owner=vagrant mode=0745 group=0
+
+     - name: create backup directory on remote server
+       file: path={{ backup_dir }} state=directory mode=0755 
+
+     - name: create cfg directory on remote server
+       file: path={{ cfg_dir }} state=directory mode=0751
+
+#     - name: create pkg  directory on remote server
+#       file: path={{ pkg_dir }} state=directory mode0777
+     - name: create pkg directory on remote_server
+       file: path={{ pkg_dir }} state=directory mode=0765
+
+     - name: create tmp directory on remote server
+       file: path={{ tmp_dir }} state=directory mode=0700
+
+     - name: create file in each directory 
+       file: path={{ item.base_dir }}/{{ item.name }}  state=touch  mode={{ item.base_mode }}
+       with_items:
+         - { name: login_test.sh , base_dir: "{{ bin_dir }}" , base_mode: 765 }
+         - { name: login.lib , base_dir: "{{ src_dir }}" , base_mode: 777 }
+         - { name: login.log , base_dir: "{{ log_dir }}" , base_mode: 766 }
+         - { name: backup.tar.gz , base_dir: "{{ backup_dir }}" , base_mode: 655 }
+         - { name: login.cfg , base_dir: "{{ cfg_dir }}" , base_mode: 666 }
+         - { name: login.rpm  , base_dir: "{{ pkg_dir }}" , base_mode: 655 }
+         - { name: login.tmp , base_dir: "{{ tmp_dir }}" , base_mode: 755 }
+
+
+
+
