@@ -1,0 +1,15 @@
+---
+- hosts: "{{ jenkins_host | default('127.0.0.1') }}"
+  user: "{{ Jenkins_LoginUser }}"
+  tasks:
+
+  - name: Trigger Jenkins Job using uri module in ansible
+    uri:
+      url: http://{{ jenkins_host }}:8080/job/{{ jenkins_job }}/buildWithParameters?versionID={{ jenkins_version }}&groupID={{ jenkins_groupid }}&artifactID={{ jenkins_var1 }}&deployENV={{ jenkins_var2 }}
+      method: POST
+      user: "{{ jenkins_user }}"
+      password: "{{ jenkins_password }}"
+      force_basic_auth: yes
+      status_code: 201
+      body_format: json
+
