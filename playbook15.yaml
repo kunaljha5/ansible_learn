@@ -15,4 +15,6 @@
      - name: print the nodename of each name from fact variable {{ ansible_eth1.ipv4.address }}
        debug: msg="{{ ansible_nodename }} for  {{ ansible_eth1["ipv4"]["address"] }}  "
      
+     
+     
     
