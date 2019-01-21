@@ -27,3 +27,5 @@
      - name: Print non zero rc string
        shell: echo "My Name is Kunal Jha" 
        when: result_kunal.rc != 0 
+
+
