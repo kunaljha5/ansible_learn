@@ -36,6 +36,7 @@
      - name: create pkg directory on remote_server
        file: path={{ pkg_dir }} state=directory mode=0765
 
+
      - name: create tmp directory on remote server
        file: path={{ tmp_dir }} state=directory mode=0700
 
